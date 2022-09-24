@@ -2,7 +2,7 @@
   import './App.css';
 
 
-  const App = (props) => {
+  const App = () => {
 
     const [listExpense, setListExpense] = useState([
       {
@@ -36,15 +36,21 @@
     const [date, setDate] = useState('');
     const [yearFilter, setYearFilter] = useState('2022');
     const [listChart, setListChart] = useState([]);
-  
+    const [expenseUpdate, setExpenseUpdate] = useState('');
 
 
     const [toggleForm, setToggleForm] = useState(false);
 
-    const handleDeleteExpense = (id) => {
-      console.log()
-    }
-  
+
+  const handleDeleteExpense = (id) =>{
+    const getListExpense = [...listExpense];
+    const expenses = getListExpense.filter((element) => !(element.id == id));
+   
+    setListExpense(expenses);
+  }
+  const handleEditExpense = (id) => {
+    
+  }
 
     const handleShowForm = () => {
       setToggleForm(true);
@@ -58,11 +64,7 @@
         id: Math.floor(Math.random() * 100) + 1,
       };
       console.log('date: ', date);
-      // C1
-      // const data = [...listExpense];
-      // data.push(expense);
-      // setListExpense([...data])
-      // C2
+    
       setListExpense([...listExpense, expense]);
     };
 
@@ -139,7 +141,7 @@
               <button className="button-cancel" onClick={handleCloseForm}>
                 Cancel
               </button>
-              <button className="button-Update" >
+              <button className="button-Update" onClick={handleEditExpense} >
                 Update
               </button>
 
@@ -201,8 +203,8 @@
                     
                     <div className="expense-money">${element.amount}</div>
                     <div className='button-edit__delete-expense'>
-                      <button className='button-edit' onClick={handleShowForm}>EDIT</button>
-                      <button className='button-delete' onClick={handleDeleteExpense}>DELETE</button>
+                      <button className='button-edit' onClick={(e)=>handleShowForm(element.id)}>EDIT</button>
+                      <button className='button-delete' onClick={(e)=>handleDeleteExpense(element.id)}>DELETE</button>
                      
                     </div>
                   </div>
